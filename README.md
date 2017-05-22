@@ -2,8 +2,20 @@
 
 An Automation UI for Kittens Game written in Elm.
 
+The script is still in it's alpha stages, right now only the current features
+exist:
 
-Still at the first steps, nothing usable yet.
+* Automatically Gather Catnip(fixed at 10 clicks/sec atm)
+* Automatically build Catnip Fields(when catnip >= 90% of max)
+
+TODO:
+
+* Configurable catnip click rate
+* Configurable resource ratio for auto building
+* Automatically observe astronomical events
+* Automatic Catnip refining
+* More crafting
+* More auto building
 
 
 ```
