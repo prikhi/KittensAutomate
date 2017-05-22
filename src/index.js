@@ -46,6 +46,12 @@ function loadApp() {
     console.log("Building Field.");
     $('.btnContent:contains("Catnip field")').click();
   });
+
+  /* craftWood */
+  app.ports.craftWood.subscribe(function() {
+    console.log("Crafting Wood.");
+    $('.btnContent:contains("Refine catnip")').click();
+  });
 }
 
 

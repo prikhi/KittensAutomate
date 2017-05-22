@@ -14,16 +14,18 @@ proceesGameData model gameData =
             Err error ->
                 Debug.crash <| "Failed to Decode Game Data " ++ error
 
-            Ok { currentResources, buildings } ->
+            Ok { currentResources, buildings, recipes } ->
                 { model
                     | buildings = List.filterMap (\x -> x) buildings
                     , currentResources = List.filterMap (\x -> x) currentResources
+                    , recipes = List.filterMap (\x -> x) recipes
                 }
 
 
 type alias GameData =
     { currentResources : List (Maybe CurrentResource)
     , buildings : List (Maybe Building)
+    , recipes : List (Maybe Recipe)
     }
 
 
@@ -34,16 +36,21 @@ decodeGameData =
 
 gameDataDecoder : Decode.Decoder GameData
 gameDataDecoder =
-    Decode.map2 GameData
+    Decode.map3 GameData
         (Decode.field "resPool" <|
             Decode.field "resources" <|
-                Decode.list (Decode.maybe decodeCurrentResource)
+                Decode.list (Decode.maybe currentResourceDecoder)
         )
         (Decode.field "bld" <|
             Decode.field "meta" <|
                 Decode.index 0 <|
                     Decode.field "meta" <|
                         Decode.list (Decode.maybe buildingDecoder)
+        )
+        (Decode.field "craftTable" <|
+            Decode.field "resRows" <|
+                Decode.list <|
+                    Decode.maybe (Decode.field "recipeRef" recipeDecoder)
         )
 
 
@@ -91,9 +98,31 @@ priceDecoder =
         (Decode.field "val" Decode.float)
 
 
-decodeCurrentResource : Decode.Decoder CurrentResource
-decodeCurrentResource =
+currentResourceDecoder : Decode.Decoder CurrentResource
+currentResourceDecoder =
     Decode.map3 CurrentResource
         (Decode.field "name" resourceTypeDecoder)
         (Decode.field "value" Decode.float)
         (Decode.field "maxValue" Decode.float)
+
+
+recipeDecoder : Decode.Decoder Recipe
+recipeDecoder =
+    Decode.map3 Recipe
+        (Decode.field "name" recipeTypeDecoder)
+        (Decode.field "unlocked" Decode.bool)
+        (Decode.field "prices" (Decode.list priceDecoder))
+
+
+recipeTypeDecoder : Decode.Decoder RecipeType
+recipeTypeDecoder =
+    let
+        parseRecipeType str =
+            case str of
+                "wood" ->
+                    succeed Wood
+
+                _ ->
+                    Decode.fail ("Could not decode recipe type: " ++ str)
+    in
+        Decode.string |> Decode.andThen parseRecipeType

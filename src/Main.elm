@@ -4,7 +4,7 @@ import Json.Decode exposing (Value)
 import Html exposing (Html, div, label, input, text)
 import Html.Attributes exposing (type_, checked, style)
 import Html.Events exposing (onClick)
-import Commands exposing (buildFieldCommand)
+import Commands
 import Decoders exposing (proceesGameData)
 import Models exposing (Model, Options, initialOptions, BuildingType(..))
 import Ports
@@ -35,6 +35,7 @@ initialModel =
         { options = initialOptions
         , buildings = []
         , currentResources = []
+        , recipes = []
         }
 
 
@@ -45,6 +46,7 @@ initialModel =
 type Msg
     = ToggleGatherCatnip
     | ToggleBuildField
+    | ToggleCraftWood
     | UpdateGameData Value
 
 
@@ -71,12 +73,24 @@ update msg ({ options } as model) =
             in
                 ( { model | options = updatedOptions }, Cmd.none )
 
+        ToggleCraftWood ->
+            let
+                updatedOptions =
+                    { options | craftWood = not options.craftWood }
+            in
+                ( { model | options = updatedOptions }, Cmd.none )
+
         UpdateGameData jsonGameData ->
             let
                 updatedModel =
                     proceesGameData model jsonGameData
             in
-                ( updatedModel, buildFieldCommand updatedModel )
+                ( updatedModel
+                , Cmd.batch
+                    [ Commands.buildFieldCommand updatedModel
+                    , Commands.craftWoodCommand updatedModel
+                    ]
+                )
 
 
 
@@ -92,6 +106,8 @@ view { options } =
         , checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
         , Html.br [] []
         , checkboxOption options.buildField ToggleBuildField "Build Fields"
+        , Html.br [] []
+        , checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
         ]
 
 

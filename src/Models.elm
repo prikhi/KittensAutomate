@@ -5,12 +5,14 @@ type alias Model =
     { options : Options
     , currentResources : List CurrentResource
     , buildings : List Building
+    , recipes : List Recipe
     }
 
 
 type alias Options =
     { gatherCatnip : Bool
     , buildField : Bool
+    , craftWood : Bool
     }
 
 
@@ -18,6 +20,7 @@ initialOptions : Options
 initialOptions =
     { gatherCatnip = False
     , buildField = False
+    , craftWood = False
     }
 
 
@@ -47,4 +50,15 @@ type alias CurrentResource =
     { resourceType : ResourceType
     , current : Float
     , max : Float
+    }
+
+
+type RecipeType
+    = Wood
+
+
+type alias Recipe =
+    { recipeType : RecipeType
+    , unlocked : Bool
+    , prices : List Price
     }

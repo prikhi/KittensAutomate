@@ -10,12 +10,15 @@ exist:
 
 TODO:
 
+* Fix automation when button not displayed
 * Configurable catnip click rate
 * Configurable resource ratio for auto building
 * Automatically observe astronomical events
 * Automatic Catnip refining
-* More crafting
-* More auto building
+* More auto crafting/building
+* Send hunters
+* Automted trading
+* Auto research
 
 
 ```
