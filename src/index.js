@@ -56,6 +56,14 @@ function loadApp() {
     }
   });
 
+  /* sendHunters */
+  app.ports.sendHunters.subscribe(function() {
+    console.log("Sending Your Hunters.");
+    $('#fastHuntContainer a').click();
+  });
+
+
+  /** Buildings **/
   /* buildField */
   app.ports.buildField.subscribe(function() {
     console.log("Building Field.");
@@ -74,6 +82,8 @@ function loadApp() {
     $('.btnContent:contains("Barn")').click();
   });
 
+
+  /** Crafting **/
   /* craftWood */
   app.ports.craftWood.subscribe(function() {
     console.log("Crafting Wood.");

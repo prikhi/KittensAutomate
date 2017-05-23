@@ -12,6 +12,7 @@ type alias Model =
 type alias Options =
     { gatherCatnip : Bool
     , observeSky : Bool
+    , sendHunters : Bool
     , buildField : Bool
     , buildHut : Bool
     , buildBarn : Bool
@@ -23,6 +24,7 @@ initialOptions : Options
 initialOptions =
     { gatherCatnip = False
     , observeSky = False
+    , sendHunters = False
     , buildField = False
     , buildHut = False
     , buildBarn = False
@@ -48,6 +50,7 @@ type alias Building =
 type ResourceType
     = Catnip
     | Wood
+    | Catpower
 
 
 type alias Price =

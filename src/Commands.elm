@@ -1,6 +1,6 @@
-module Commands exposing (getBuildCommand, getCraftCommand)
+module Commands exposing (getBuildCommand, getCraftCommand, sendHuntersCommand)
 
-import Models exposing (Model, Options, CurrentResource, Price, BuildingType(..), RecipeType(..))
+import Models exposing (..)
 import Ports
 
 
@@ -32,6 +32,21 @@ getCraftCommand model =
                 commandArgs
     in
         List.head commands
+
+
+sendHuntersCommand : Model -> Cmd msg
+sendHuntersCommand model =
+    let
+        atMaxCatpower =
+            List.filter (\r -> r.resourceType == Catpower) model.currentResources
+                |> List.head
+                |> Maybe.map (\r -> r.current >= 0.98 * r.max)
+                |> Maybe.withDefault False
+    in
+        if model.options.sendHunters && atMaxCatpower then
+            Ports.sendHunters ()
+        else
+            Cmd.none
 
 
 buildCommand : BuildingType -> (Options -> Bool) -> (() -> Cmd msg) -> Model -> Maybe (Cmd msg)

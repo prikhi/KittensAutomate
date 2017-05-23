@@ -95,6 +95,9 @@ resourceTypeDecoder =
                 "wood" ->
                     succeed Wood
 
+                "manpower" ->
+                    succeed Catpower
+
                 _ ->
                     Decode.fail ("Could not decode resource type: " ++ str)
     in

@@ -12,6 +12,9 @@ port toggleGatherCatnip : () -> Cmd msg
 port toggleObserveSky : () -> Cmd msg
 
 
+port sendHunters : () -> Cmd msg
+
+
 port buildField : () -> Cmd msg
 
 

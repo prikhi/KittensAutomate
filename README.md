@@ -9,6 +9,7 @@ exist:
 * Automatically Build Catnip Fields, Huts, & Barns(when resources >= 90% of max)
 * Automatically Refine Catnip into Wood
 * Automatically Observe Astronomical Events
+* Automatically Send Your Hunters when at Max Catpower
 
 TODO:
 
@@ -22,7 +23,6 @@ TODO:
 * Configurable catnip click rate
 * Configurable resource ratios for auto building/crafting
 * More auto crafting/building
-* Auto send hunters
 * Automated trading
 * Auto research
 * Fullscreen button, turns panel into large modal window(when lots of UI options)

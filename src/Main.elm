@@ -46,6 +46,7 @@ initialModel =
 type Msg
     = ToggleGatherCatnip
     | ToggleObserveSky
+    | ToggleSendHunters
     | ToggleBuildField
     | ToggleBuildHut
     | ToggleBuildBarn
@@ -73,6 +74,13 @@ update msg ({ options } as model) =
                     { options | observeSky = not options.observeSky }
             in
                 ( { model | options = updatedOptions }, Ports.toggleObserveSky () )
+
+        ToggleSendHunters ->
+            let
+                updatedOptions =
+                    { options | sendHunters = not options.sendHunters }
+            in
+                ( { model | options = updatedOptions }, Cmd.none )
 
         ToggleBuildField ->
             let
@@ -119,7 +127,10 @@ update msg ({ options } as model) =
                                 |> Maybe.withDefault
                                     Cmd.none
             in
-                ( updatedModel, buildOrCraftCommand )
+                ( updatedModel
+                , Cmd.batch
+                    [ buildOrCraftCommand, Commands.sendHuntersCommand model ]
+                )
 
 
 
@@ -134,6 +145,7 @@ view { options } =
             [ text "Kittens Automate" ]
         , checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
         , checkboxOption options.observeSky ToggleObserveSky "Observe the Sky"
+        , checkboxOption options.sendHunters ToggleSendHunters "Send Hunters"
         , checkboxOption options.buildField ToggleBuildField "Build Fields"
         , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
         , checkboxOption options.buildBarn ToggleBuildBarn "Build Barns"
