@@ -19,7 +19,7 @@ function loadApp() {
   var parentNode = document.getElementById('rightTabLog');
   parentNode.insertBefore(node, parentNode.firstChild);
 
-  var storedOptionsVersion = localStorage.getItem(localStorageOptionsKey);
+  var storedOptionsVersion = localStorage.getItem(localStorageOptionsVersionKey);
   var options = null;
   if (storedOptionsVersion == optionsVersion) {
     options = JSON.parse(localStorage.getItem(localStorageOptionsKey));
