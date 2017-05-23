@@ -1,10 +1,13 @@
 'use strict';
 
 var $ = require('../node_modules/jquery/dist/jquery.slim.js');
+const localStorageOptionsKey = 'kittens-automate-options';
+const localStorageOptionsVersionKey = 'kittens-automate-options-version';
+
+const optionsVersion = 1;
 
 function waitForGameData() {
   if (typeof window.gamePage !== "undefined") {
-    console.log(window.gamePage);
     loadApp();
   } else {
     setTimeout(waitForGameData, 250);
@@ -16,8 +19,17 @@ function loadApp() {
   var parentNode = document.getElementById('rightTabLog');
   parentNode.insertBefore(node, parentNode.firstChild);
 
+  var storedOptionsVersion = localStorage.getItem(localStorageOptionsKey);
+  var options = null;
+  if (storedOptionsVersion == optionsVersion) {
+    options = JSON.parse(localStorage.getItem(localStorageOptionsKey));
+  }
+
   var Elm = require('./Main.elm');
-  var app = Elm.Main.embed(node, window.gamePage);
+  var app = Elm.Main.embed(node, {
+    gameData: window.gamePage,
+    options: options,
+  });
 
   /** Subs **/
   /* Update GameData every Second */
@@ -26,6 +38,13 @@ function loadApp() {
   }, 1000);
 
   /** Ports **/
+  /* saveOptions */
+  app.ports.saveOptions.subscribe(function(options) {
+    console.log("Saving Options.");
+    localStorage.setItem(localStorageOptionsVersionKey, optionsVersion);
+    localStorage.setItem(localStorageOptionsKey, JSON.stringify(options));
+  })
+
   /* toggleGatherCatnip */
   var gatherCatnipInterval = null;
   app.ports.toggleGatherCatnip.subscribe(function() {

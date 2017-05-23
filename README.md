@@ -13,7 +13,6 @@ exist:
 
 TODO:
 
-* Save Options & Load on Page Load
 * Population management
     * minimum amount of farmers to never starve
     * always max engineers
@@ -21,8 +20,9 @@ TODO:
 * Fix automation when button not displayed
 * Configurable catnip click rate
 * Configurable resource ratios for auto building/crafting
-* More auto crafting/building
+* More auto crafting/building options
 * Automated trading
+* Auto praise
 * Auto research
 * Fullscreen button, turns panel into large modal window(when lots of UI options)
 

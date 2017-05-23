@@ -10,7 +10,7 @@ import Models exposing (Model, Options, Tab(..), initialOptions, BuildingType(..
 import Ports
 
 
-main : Program Value Model Msg
+main : Program Flags Model Msg
 main =
     Html.programWithFlags
         { init = init
@@ -20,24 +20,29 @@ main =
         }
 
 
+type alias Flags =
+    { gameData : Value, options : Maybe Options }
+
+
 
 -- Model
 
 
-init : Value -> ( Model, Cmd Msg )
-init gameData =
-    ( initialModel gameData, Cmd.none )
+init : Flags -> ( Model, Cmd Msg )
+init { gameData, options } =
+    ( initialModel gameData options, Cmd.none )
 
 
-initialModel : Value -> Model
-initialModel =
+initialModel : Value -> Maybe Options -> Model
+initialModel gameData maybeOptions =
     proceesGameData
-        { options = initialOptions
+        { options = maybeOptions |> Maybe.withDefault initialOptions
         , currentTab = General
         , buildings = []
         , currentResources = []
         , recipes = []
         }
+        gameData
 
 
 
@@ -71,21 +76,25 @@ update msg ({ options } as model) =
                 updatedOptions =
                     { options | gatherCatnip = not options.gatherCatnip }
             in
-                ( { model | options = updatedOptions }, Ports.toggleGatherCatnip () )
+                ( { model | options = updatedOptions }
+                , Cmd.batch [ Ports.toggleGatherCatnip (), Ports.saveOptions options ]
+                )
 
         ToggleObserveSky ->
             let
                 updatedOptions =
                     { options | observeSky = not options.observeSky }
             in
-                ( { model | options = updatedOptions }, Ports.toggleObserveSky () )
+                ( { model | options = updatedOptions }
+                , Cmd.batch [ Ports.toggleObserveSky (), Ports.saveOptions options ]
+                )
 
         ToggleSendHunters ->
             let
                 updatedOptions =
                     { options | sendHunters = not options.sendHunters }
             in
-                ( { model | options = updatedOptions }, Cmd.none )
+                ( { model | options = updatedOptions }, Ports.saveOptions options )
 
         ToggleBuildField ->
             let
@@ -94,28 +103,28 @@ update msg ({ options } as model) =
                         | buildField = not options.buildField
                     }
             in
-                ( { model | options = updatedOptions }, Cmd.none )
+                ( { model | options = updatedOptions }, Ports.saveOptions options )
 
         ToggleBuildHut ->
             let
                 updatedOptions =
                     { options | buildHut = not options.buildHut }
             in
-                ( { model | options = updatedOptions }, Cmd.none )
+                ( { model | options = updatedOptions }, Ports.saveOptions options )
 
         ToggleBuildBarn ->
             let
                 updatedOptions =
                     { options | buildBarn = not options.buildBarn }
             in
-                ( { model | options = updatedOptions }, Cmd.none )
+                ( { model | options = updatedOptions }, Ports.saveOptions options )
 
         ToggleCraftWood ->
             let
                 updatedOptions =
                     { options | craftWood = not options.craftWood }
             in
-                ( { model | options = updatedOptions }, Cmd.none )
+                ( { model | options = updatedOptions }, Ports.saveOptions options )
 
         UpdateGameData jsonGameData ->
             let
