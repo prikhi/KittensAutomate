@@ -16,23 +16,26 @@ craftWoodCommand =
 
 buildCommand : BuildingType -> (Options -> Bool) -> (() -> Cmd msg) -> Model -> Cmd msg
 buildCommand =
-    buildCraftCommand .buildingType .buildings
+    buildCraftCommand .buildingType
+        .buildings
+        (\i p -> { p | amount = i.priceRatio ^ (toFloat i.count) * p.amount })
 
 
 craftCommand : RecipeType -> (Options -> Bool) -> (() -> Cmd msg) -> Model -> Cmd msg
 craftCommand =
-    buildCraftCommand .recipeType .recipes
+    buildCraftCommand .recipeType .recipes (flip always)
 
 
 buildCraftCommand :
     ({ a | prices : List Price, unlocked : Bool } -> b)
     -> (Model -> List { a | prices : List Price, unlocked : Bool })
+    -> ({ a | prices : List Price, unlocked : Bool } -> Price -> Price)
     -> b
     -> (Options -> Bool)
     -> (() -> Cmd msg)
     -> Model
     -> Cmd msg
-buildCraftCommand typeSelector modelSelector desiredType optionsSelector cmd ({ options, currentResources } as model) =
+buildCraftCommand typeSelector modelSelector priceFunc desiredType optionsSelector cmd ({ options, currentResources } as model) =
     let
         enabled =
             optionsSelector options && unlocked
@@ -44,7 +47,9 @@ buildCraftCommand typeSelector modelSelector desiredType optionsSelector cmd ({ 
             maybeItem |> Maybe.map (.unlocked) |> Maybe.withDefault False
 
         prices =
-            maybeItem |> Maybe.map (.prices) |> Maybe.withDefault []
+            maybeItem
+                |> Maybe.map (\i -> List.map (priceFunc i) i.prices)
+                |> Maybe.withDefault []
 
         canAfford =
             List.length prices > 0 && List.all (enoughResources currentResources) prices

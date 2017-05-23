@@ -70,10 +70,11 @@ buildingTypeDecoder =
 
 buildingDecoder : Decode.Decoder Building
 buildingDecoder =
-    Decode.map4 Building
+    Decode.map5 Building
         (Decode.field "name" buildingTypeDecoder)
         (Decode.field "unlocked" Decode.bool)
         (Decode.field "val" Decode.int)
+        (Decode.field "priceRatio" Decode.float)
         (Decode.field "prices" (Decode.list priceDecoder))
 
 

@@ -32,6 +32,7 @@ type alias Building =
     { buildingType : BuildingType
     , unlocked : Bool
     , count : Int
+    , priceRatio : Float
     , prices : List Price
     }
 
