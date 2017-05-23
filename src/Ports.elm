@@ -9,6 +9,9 @@ port updateGameData : (Value -> msg) -> Sub msg
 port toggleGatherCatnip : () -> Cmd msg
 
 
+port toggleObserveSky : () -> Cmd msg
+
+
 port buildField : () -> Cmd msg
 
 

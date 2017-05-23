@@ -41,6 +41,21 @@ function loadApp() {
     }
   });
 
+  /* toggleObserveSky */
+  var observeSkyInterval = null;
+  app.ports.toggleObserveSky.subscribe(function() {
+    if (observeSkyInterval) {
+      console.log("Disabling Sky Observation.");
+      clearInterval(observeSkyInterval);
+      observeSkyInterval = null;
+    } else {
+      console.log("Enabling Sky Observation.");
+      observeSkyInterval = setInterval(function() {
+        $('#observeBtn').click();
+      }, 1000);
+    }
+  });
+
   /* buildField */
   app.ports.buildField.subscribe(function() {
     console.log("Building Field.");

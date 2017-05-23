@@ -11,6 +11,7 @@ type alias Model =
 
 type alias Options =
     { gatherCatnip : Bool
+    , observeSky : Bool
     , buildField : Bool
     , buildHut : Bool
     , craftWood : Bool
@@ -20,6 +21,7 @@ type alias Options =
 initialOptions : Options
 initialOptions =
     { gatherCatnip = False
+    , observeSky = False
     , buildField = False
     , buildHut = False
     , craftWood = False

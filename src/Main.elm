@@ -45,6 +45,7 @@ initialModel =
 
 type Msg
     = ToggleGatherCatnip
+    | ToggleObserveSky
     | ToggleBuildField
     | ToggleBuildHut
     | ToggleCraftWood
@@ -64,6 +65,13 @@ update msg ({ options } as model) =
                     { options | gatherCatnip = not options.gatherCatnip }
             in
                 ( { model | options = updatedOptions }, Ports.toggleGatherCatnip () )
+
+        ToggleObserveSky ->
+            let
+                updatedOptions =
+                    { options | observeSky = not options.observeSky }
+            in
+                ( { model | options = updatedOptions }, Ports.toggleObserveSky () )
 
         ToggleBuildField ->
             let
@@ -113,6 +121,7 @@ view { options } =
             [ style [ ( "margin", "0 0 10px" ), ( "text-align", "center" ) ] ]
             [ text "Kittens Automate" ]
         , checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
+        , checkboxOption options.observeSky ToggleObserveSky "Observe the Sky"
         , checkboxOption options.buildField ToggleBuildField "Build Fields"
         , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
         , checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
