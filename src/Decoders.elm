@@ -62,6 +62,9 @@ buildingTypeDecoder =
                 "field" ->
                     succeed Field
 
+                "hut" ->
+                    succeed Hut
+
                 _ ->
                     Decode.fail ("Could not decode building type: " ++ str)
     in
@@ -85,6 +88,9 @@ resourceTypeDecoder =
             case str of
                 "catnip" ->
                     succeed Catnip
+
+                "wood" ->
+                    succeed Wood
 
                 _ ->
                     Decode.fail ("Could not decode resource type: " ++ str)
@@ -121,7 +127,7 @@ recipeTypeDecoder =
         parseRecipeType str =
             case str of
                 "wood" ->
-                    succeed Wood
+                    succeed CraftWood
 
                 _ ->
                     Decode.fail ("Could not decode recipe type: " ++ str)

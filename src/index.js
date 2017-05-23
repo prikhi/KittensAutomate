@@ -47,6 +47,12 @@ function loadApp() {
     $('.btnContent:contains("Catnip field")').click();
   });
 
+  /* buildHut */
+  app.ports.buildHut.subscribe(function() {
+    console.log("Building Hut.");
+    $('.btnContent:contains("Hut")').click();
+  })
+
   /* craftWood */
   app.ports.craftWood.subscribe(function() {
     console.log("Crafting Wood.");

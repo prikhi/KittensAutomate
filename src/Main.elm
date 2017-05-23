@@ -46,6 +46,7 @@ initialModel =
 type Msg
     = ToggleGatherCatnip
     | ToggleBuildField
+    | ToggleBuildHut
     | ToggleCraftWood
     | UpdateGameData Value
 
@@ -73,6 +74,13 @@ update msg ({ options } as model) =
             in
                 ( { model | options = updatedOptions }, Cmd.none )
 
+        ToggleBuildHut ->
+            let
+                updatedOptions =
+                    { options | buildHut = not options.buildHut }
+            in
+                ( { model | options = updatedOptions }, Cmd.none )
+
         ToggleCraftWood ->
             let
                 updatedOptions =
@@ -88,6 +96,7 @@ update msg ({ options } as model) =
                 ( updatedModel
                 , Cmd.batch
                     [ Commands.buildFieldCommand updatedModel
+                    , Commands.buildHutCommand updatedModel
                     , Commands.craftWoodCommand updatedModel
                     ]
                 )
@@ -106,6 +115,8 @@ view { options } =
         , checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
         , Html.br [] []
         , checkboxOption options.buildField ToggleBuildField "Build Fields"
+        , Html.br [] []
+        , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
         , Html.br [] []
         , checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
         ]

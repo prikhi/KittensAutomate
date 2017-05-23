@@ -1,4 +1,4 @@
-module Commands exposing (buildFieldCommand, craftWoodCommand)
+module Commands exposing (buildFieldCommand, buildHutCommand, craftWoodCommand)
 
 import Models exposing (Model, Options, CurrentResource, Price, BuildingType(..), RecipeType(..))
 import Ports
@@ -9,9 +9,14 @@ buildFieldCommand =
     buildCommand Field .buildField Ports.buildField
 
 
+buildHutCommand : Model -> Cmd msg
+buildHutCommand =
+    buildCommand Hut .buildHut Ports.buildHut
+
+
 craftWoodCommand : Model -> Cmd msg
 craftWoodCommand =
-    craftCommand Wood .craftWood Ports.craftWood
+    craftCommand CraftWood .craftWood Ports.craftWood
 
 
 buildCommand : BuildingType -> (Options -> Bool) -> (() -> Cmd msg) -> Model -> Cmd msg

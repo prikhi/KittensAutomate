@@ -12,4 +12,7 @@ port toggleGatherCatnip : () -> Cmd msg
 port buildField : () -> Cmd msg
 
 
+port buildHut : () -> Cmd msg
+
+
 port craftWood : () -> Cmd msg

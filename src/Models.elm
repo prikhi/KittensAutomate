@@ -12,6 +12,7 @@ type alias Model =
 type alias Options =
     { gatherCatnip : Bool
     , buildField : Bool
+    , buildHut : Bool
     , craftWood : Bool
     }
 
@@ -20,12 +21,14 @@ initialOptions : Options
 initialOptions =
     { gatherCatnip = False
     , buildField = False
+    , buildHut = False
     , craftWood = False
     }
 
 
 type BuildingType
     = Field
+    | Hut
 
 
 type alias Building =
@@ -39,6 +42,7 @@ type alias Building =
 
 type ResourceType
     = Catnip
+    | Wood
 
 
 type alias Price =
@@ -55,7 +59,7 @@ type alias CurrentResource =
 
 
 type RecipeType
-    = Wood
+    = CraftWood
 
 
 type alias Recipe =

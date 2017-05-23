@@ -10,15 +10,22 @@ exist:
 
 TODO:
 
+* Save Options & Load on Page Load
+* Split buildings & recipes into tabs
+* Population management
+    * minimum amount of farmers to never starve
+    * always max engineers
+    * sliders to control distribution percentages
 * Fix automation when button not displayed
 * Configurable catnip click rate
-* Configurable resource ratio for auto building
+* Configurable resource ratios for auto building/crafting
 * Automatically observe astronomical events
 * Automatic Catnip refining
 * More auto crafting/building
-* Send hunters
-* Automted trading
+* Auto send hunters
+* Automated trading
 * Auto research
+* Fullscreen button, turns panel into large modal window(when lots of UI options)
 
 
 ```
