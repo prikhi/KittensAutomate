@@ -7,7 +7,7 @@ import Ports
 
 all : List BuildingType
 all =
-    [ Field, Hut, Barn ]
+    [ Field, Hut, Library, Academy, Barn, Mine, Smelter, Workshop ]
 
 
 toString : BuildingType -> String
@@ -19,8 +19,23 @@ toString buildingType =
         Hut ->
             "Huts"
 
+        Library ->
+            "Libraries"
+
+        Academy ->
+            "Academies"
+
         Barn ->
             "Barns"
+
+        Mine ->
+            "Mines"
+
+        Smelter ->
+            "Smelters"
+
+        Workshop ->
+            "Workshop"
 
 
 optionSelector : BuildingType -> (Options -> Bool)
@@ -32,8 +47,23 @@ optionSelector buildingType =
         Hut ->
             .buildHut
 
+        Library ->
+            .buildLibrary
+
+        Academy ->
+            .buildAcademy
+
         Barn ->
             .buildBarn
+
+        Mine ->
+            .buildMine
+
+        Smelter ->
+            .buildSmelter
+
+        Workshop ->
+            .buildWorkshop
 
 
 message : BuildingType -> Msg
@@ -46,18 +76,49 @@ message buildingType =
             Hut ->
                 BuildHut
 
+            Library ->
+                BuildLibrary
+
+            Academy ->
+                BuildAcademy
+
             Barn ->
                 BuildBarn
+
+            Mine ->
+                BuildMine
+
+            Smelter ->
+                BuildSmelter
+
+            Workshop ->
+                BuildWorkshop
 
 
 clickCommand : BuildingType -> Cmd msg
 clickCommand buildingType =
-    case buildingType of
-        Field ->
-            Ports.clickBuildingButton "Catnip field"
+    Ports.clickBuildingButton <|
+        case buildingType of
+            Field ->
+                "Catnip field"
 
-        Hut ->
-            Ports.clickBuildingButton "Hut"
+            Hut ->
+                "Hut"
 
-        Barn ->
-            Ports.clickBuildingButton "Barn"
+            Library ->
+                "Library"
+
+            Academy ->
+                "Academy"
+
+            Barn ->
+                "Barn"
+
+            Mine ->
+                "Mine"
+
+            Smelter ->
+                "Smelter"
+
+            Workshop ->
+                "Workshop"

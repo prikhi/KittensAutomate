@@ -17,5 +17,10 @@ type OptionsMsg
     | PraiseSun
     | BuildField
     | BuildHut
+    | BuildLibrary
+    | BuildAcademy
     | BuildBarn
+    | BuildMine
+    | BuildSmelter
+    | BuildWorkshop
     | CraftWood

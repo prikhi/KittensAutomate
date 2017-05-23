@@ -25,8 +25,7 @@ TODO:
 * Auto research
 * Fullscreen button, turns panel into large modal window(when lots of UI options)
 * Refactor Ports(click link, click building button, click craft button)
-* Refactor code to generate checkboxes & handle updates using lists of
-  buildings/recipes.
+* Fix parsing of JSON for buildings with multiple stages
 
 
 ```
