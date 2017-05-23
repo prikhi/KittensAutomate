@@ -102,7 +102,7 @@ view { options } =
     div [ style [ ( "margin", "15px 5px" ), ( "padding", "10px 5px" ), ( "border", "solid 1px black" ) ] ]
         [ Html.h5
             [ style [ ( "margin", "0 0 10px" ), ( "text-align", "center" ) ] ]
-            [ text "Kitten Automate" ]
+            [ text "Kittens Automate" ]
         , checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
         , Html.br [] []
         , checkboxOption options.buildField ToggleBuildField "Build Fields"
