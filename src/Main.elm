@@ -108,15 +108,18 @@ update msg ({ options } as model) =
             let
                 updatedModel =
                     proceesGameData model jsonGameData
+
+                buildOrCraftCommand =
+                    case Commands.getBuildCommand updatedModel of
+                        Just cmd ->
+                            cmd
+
+                        Nothing ->
+                            Commands.getCraftCommand updatedModel
+                                |> Maybe.withDefault
+                                    Cmd.none
             in
-                ( updatedModel
-                , Cmd.batch
-                    [ Commands.buildFieldCommand updatedModel
-                    , Commands.buildHutCommand updatedModel
-                    , Commands.buildBarnCommand updatedModel
-                    , Commands.craftWoodCommand updatedModel
-                    ]
-                )
+                ( updatedModel, buildOrCraftCommand )
 
 
 
