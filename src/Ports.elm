@@ -18,4 +18,7 @@ port buildField : () -> Cmd msg
 port buildHut : () -> Cmd msg
 
 
+port buildBarn : () -> Cmd msg
+
+
 port craftWood : () -> Cmd msg

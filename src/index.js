@@ -66,7 +66,13 @@ function loadApp() {
   app.ports.buildHut.subscribe(function() {
     console.log("Building Hut.");
     $('.btnContent:contains("Hut")').click();
-  })
+  });
+
+  /* buildBarn */
+  app.ports.buildBarn.subscribe(function() {
+    console.log("Building Barn.");
+    $('.btnContent:contains("Barn")').click();
+  });
 
   /* craftWood */
   app.ports.craftWood.subscribe(function() {

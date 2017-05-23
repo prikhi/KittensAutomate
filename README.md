@@ -6,7 +6,9 @@ The script is still in it's alpha stages, right now only the current features
 exist:
 
 * Automatically Gather Catnip(fixed at 10 clicks/sec atm)
-* Automatically build Catnip Fields(when catnip >= 90% of max)
+* Automatically Build Catnip Fields, Huts, & Barns(when resources >= 90% of max)
+* Automatically Refine Catnip into Wood
+* Automatically Observe Astronomical Events
 
 TODO:
 
@@ -19,8 +21,6 @@ TODO:
 * Fix automation when button not displayed
 * Configurable catnip click rate
 * Configurable resource ratios for auto building/crafting
-* Automatically observe astronomical events
-* Automatic Catnip refining
 * More auto crafting/building
 * Auto send hunters
 * Automated trading

@@ -14,6 +14,7 @@ type alias Options =
     , observeSky : Bool
     , buildField : Bool
     , buildHut : Bool
+    , buildBarn : Bool
     , craftWood : Bool
     }
 
@@ -24,6 +25,7 @@ initialOptions =
     , observeSky = False
     , buildField = False
     , buildHut = False
+    , buildBarn = False
     , craftWood = False
     }
 
@@ -31,6 +33,7 @@ initialOptions =
 type BuildingType
     = Field
     | Hut
+    | Barn
 
 
 type alias Building =

@@ -48,6 +48,7 @@ type Msg
     | ToggleObserveSky
     | ToggleBuildField
     | ToggleBuildHut
+    | ToggleBuildBarn
     | ToggleCraftWood
     | UpdateGameData Value
 
@@ -89,6 +90,13 @@ update msg ({ options } as model) =
             in
                 ( { model | options = updatedOptions }, Cmd.none )
 
+        ToggleBuildBarn ->
+            let
+                updatedOptions =
+                    { options | buildBarn = not options.buildBarn }
+            in
+                ( { model | options = updatedOptions }, Cmd.none )
+
         ToggleCraftWood ->
             let
                 updatedOptions =
@@ -105,6 +113,7 @@ update msg ({ options } as model) =
                 , Cmd.batch
                     [ Commands.buildFieldCommand updatedModel
                     , Commands.buildHutCommand updatedModel
+                    , Commands.buildBarnCommand updatedModel
                     , Commands.craftWoodCommand updatedModel
                     ]
                 )
@@ -124,6 +133,7 @@ view { options } =
         , checkboxOption options.observeSky ToggleObserveSky "Observe the Sky"
         , checkboxOption options.buildField ToggleBuildField "Build Fields"
         , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
+        , checkboxOption options.buildBarn ToggleBuildBarn "Build Barns"
         , checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
         ]
 
