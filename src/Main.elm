@@ -4,10 +4,13 @@ import Json.Decode exposing (Value)
 import Html exposing (Html, div, label, input, text)
 import Html.Attributes exposing (type_, checked, style, href)
 import Html.Events exposing (onClick)
+import BuildingType
 import Commands
 import Decoders exposing (proceesGameData)
-import Models exposing (Model, Options, Tab(..), initialOptions, BuildingType(..))
+import Messages exposing (..)
+import Models exposing (..)
 import Ports
+import RecipeType
 
 
 main : Program Flags Model Msg
@@ -43,23 +46,6 @@ initialModel gameData maybeOptions =
         , recipes = []
         }
         gameData
-
-
-
--- Messages
-
-
-type Msg
-    = ChangeTab Tab
-    | ToggleGatherCatnip
-    | ToggleObserveSky
-    | ToggleSendHunters
-    | TogglePraiseSun
-    | ToggleBuildField
-    | ToggleBuildHut
-    | ToggleBuildBarn
-    | ToggleCraftWood
-    | UpdateGameData Value
 
 
 
@@ -179,6 +165,16 @@ view { options, currentTab } =
             else
                 Html.a [ onClick (ChangeTab tab), href "#" ] [ text name ]
 
+        buildingCheckbox buildingType =
+            checkboxOption (options |> BuildingType.optionSelector buildingType)
+                (BuildingType.message buildingType)
+                (BuildingType.toString buildingType)
+
+        recipeCheckbox recipeType =
+            checkboxOption (options |> RecipeType.optionSelector recipeType)
+                (RecipeType.message recipeType)
+                (RecipeType.toString recipeType)
+
         currentTabContents =
             case currentTab of
                 General ->
@@ -189,14 +185,10 @@ view { options, currentTab } =
                     ]
 
                 Build ->
-                    [ checkboxOption options.buildField ToggleBuildField "Build Fields"
-                    , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
-                    , checkboxOption options.buildBarn ToggleBuildBarn "Build Barns"
-                    ]
+                    List.map buildingCheckbox BuildingType.all
 
                 Craft ->
-                    [ checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
-                    ]
+                    List.map recipeCheckbox RecipeType.all
     in
         div [ style [ ( "margin", "15px 5px" ), ( "padding", "10px 5px" ), ( "border", "solid 1px black" ) ] ]
             [ Html.h3

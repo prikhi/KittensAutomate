@@ -22,13 +22,4 @@ port sendHunters : () -> Cmd msg
 port praiseSun : () -> Cmd msg
 
 
-port buildField : () -> Cmd msg
-
-
-port buildHut : () -> Cmd msg
-
-
-port buildBarn : () -> Cmd msg
-
-
-port craftWood : () -> Cmd msg
+port clickBuildingButton : String -> Cmd msg

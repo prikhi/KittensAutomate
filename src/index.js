@@ -88,31 +88,10 @@ function loadApp() {
   });
 
 
-  /** Buildings **/
-  /* buildField */
-  app.ports.buildField.subscribe(function() {
-    console.log("Building Field.");
-    $('.btnContent:contains("Catnip field")').click();
-  });
-
-  /* buildHut */
-  app.ports.buildHut.subscribe(function() {
-    console.log("Building Hut.");
-    $('.btnContent:contains("Hut")').click();
-  });
-
-  /* buildBarn */
-  app.ports.buildBarn.subscribe(function() {
-    console.log("Building Barn.");
-    $('.btnContent:contains("Barn")').click();
-  });
-
-
-  /** Crafting **/
-  /* craftWood */
-  app.ports.craftWood.subscribe(function() {
-    console.log("Crafting Wood.");
-    $('.btnContent:contains("Refine catnip")').click();
+  /* Click Button on Buildings Tab */
+  app.ports.clickBuildingButton.subscribe(function(buttonText) {
+    console.log("Building " + buttonText + ".");
+    $('.btnContent:contains("' + buttonText + '")').click();
   });
 }
 

@@ -1,21 +1,23 @@
 module Commands exposing (getBuildCommand, getCraftCommand, sendHuntersCommand, praiseSunCommand)
 
 import Models exposing (..)
+import BuildingType
 import Ports
+import RecipeType
 
 
 getBuildCommand : Model -> Maybe (Cmd msg)
 getBuildCommand model =
     let
-        commandArgs =
-            [ ( Field, .buildField, Ports.buildField )
-            , ( Hut, .buildHut, Ports.buildHut )
-            , ( Barn, .buildBarn, Ports.buildBarn )
-            ]
-
         commands =
-            List.filterMap (\( t, opt, cmd ) -> buildCommand t opt cmd model)
-                commandArgs
+            List.filterMap
+                (\bType ->
+                    buildCommand bType
+                        (BuildingType.optionSelector bType)
+                        (BuildingType.clickCommand bType)
+                        model
+                )
+                BuildingType.all
     in
         List.head commands
 
@@ -23,13 +25,18 @@ getBuildCommand model =
 getCraftCommand : Model -> Maybe (Cmd msg)
 getCraftCommand model =
     let
-        commandArgs =
-            [ ( CraftWood, .craftWood, Ports.craftWood )
-            ]
+        recipeTypes =
+            [ CraftWood ]
 
         commands =
-            List.filterMap (\( t, opt, cmd ) -> craftCommand t opt cmd model)
-                commandArgs
+            List.filterMap
+                (\rType ->
+                    craftCommand rType
+                        (RecipeType.optionSelector rType)
+                        (RecipeType.clickCommand rType)
+                        model
+                )
+                RecipeType.all
     in
         List.head commands
 
@@ -64,14 +71,14 @@ praiseSunCommand model =
             Cmd.none
 
 
-buildCommand : BuildingType -> (Options -> Bool) -> (() -> Cmd msg) -> Model -> Maybe (Cmd msg)
+buildCommand : BuildingType -> (Options -> Bool) -> Cmd msg -> Model -> Maybe (Cmd msg)
 buildCommand =
     buildCraftCommand .buildingType
         .buildings
         (\i p -> { p | amount = i.priceRatio ^ (toFloat i.count) * p.amount })
 
 
-craftCommand : RecipeType -> (Options -> Bool) -> (() -> Cmd msg) -> Model -> Maybe (Cmd msg)
+craftCommand : RecipeType -> (Options -> Bool) -> Cmd msg -> Model -> Maybe (Cmd msg)
 craftCommand =
     buildCraftCommand .recipeType .recipes (flip always)
 
@@ -82,7 +89,7 @@ buildCraftCommand :
     -> ({ a | prices : List Price, unlocked : Bool } -> Price -> Price)
     -> b
     -> (Options -> Bool)
-    -> (() -> Cmd msg)
+    -> Cmd msg
     -> Model
     -> Maybe (Cmd msg)
 buildCraftCommand typeSelector modelSelector priceFunc desiredType optionsSelector cmd ({ options, currentResources } as model) =
@@ -105,7 +112,7 @@ buildCraftCommand typeSelector modelSelector priceFunc desiredType optionsSelect
             List.length prices > 0 && List.all (enoughResources currentResources) prices
     in
         if enabled && canAfford then
-            Just <| cmd ()
+            Just cmd
         else
             Nothing
 
