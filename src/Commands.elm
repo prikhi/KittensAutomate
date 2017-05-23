@@ -1,4 +1,4 @@
-module Commands exposing (getBuildCommand, getCraftCommand, sendHuntersCommand)
+module Commands exposing (getBuildCommand, getCraftCommand, sendHuntersCommand, praiseSunCommand)
 
 import Models exposing (..)
 import Ports
@@ -45,6 +45,21 @@ sendHuntersCommand model =
     in
         if model.options.sendHunters && atMaxCatpower then
             Ports.sendHunters ()
+        else
+            Cmd.none
+
+
+praiseSunCommand : Model -> Cmd msg
+praiseSunCommand model =
+    let
+        atMaxFaith =
+            List.filter (\r -> r.resourceType == Faith) model.currentResources
+                |> List.head
+                |> Maybe.map (\r -> r.current >= 0.98 * r.max)
+                |> Maybe.withDefault False
+    in
+        if model.options.praiseSun && atMaxFaith then
+            Ports.praiseSun ()
         else
             Cmd.none
 

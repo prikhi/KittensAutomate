@@ -98,6 +98,9 @@ resourceTypeDecoder =
                 "manpower" ->
                     succeed Catpower
 
+                "faith" ->
+                    succeed Faith
+
                 _ ->
                     Decode.fail ("Could not decode resource type: " ++ str)
     in

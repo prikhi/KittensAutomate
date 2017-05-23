@@ -19,6 +19,9 @@ port toggleObserveSky : () -> Cmd msg
 port sendHunters : () -> Cmd msg
 
 
+port praiseSun : () -> Cmd msg
+
+
 port buildField : () -> Cmd msg
 
 

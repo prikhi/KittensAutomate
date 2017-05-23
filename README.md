@@ -2,14 +2,14 @@
 
 An Automation UI for Kittens Game written in Elm.
 
-The script is still in it's alpha stages, right now only the current features
-exist:
+The script is still in early development, right now you can automatically:
 
-* Automatically Gather Catnip(fixed at 10 clicks/sec atm)
-* Automatically Build Catnip Fields, Huts, & Barns(when resources >= 90% of max)
-* Automatically Refine Catnip into Wood
-* Automatically Observe Astronomical Events
-* Automatically Send Your Hunters when at Max Catpower
+* Gather Catnip(fixed at 10 clicks/sec atm)
+* Build Catnip Fields, Huts, & Barns(when resources >= 90% of max)
+* Refine Catnip into Wood
+* Observe Astronomical Events
+* Send Your Hunters when at Max Catpower
+* Praise the Sun when at Max Faith
 
 TODO:
 
@@ -22,13 +22,16 @@ TODO:
 * Configurable resource ratios for auto building/crafting
 * More auto crafting/building options
 * Automated trading
-* Auto praise
 * Auto research
 * Fullscreen button, turns panel into large modal window(when lots of UI options)
+* Refactor Ports(click link, click building button, click craft button)
+* Refactor code to generate checkboxes & handle updates using lists of
+  buildings/recipes.
 
 
 ```
 npm i
+git submodule update --init
 cd game/
 # Add `<script src='http://localhost:7000/app.js'></script>` to index.html
 python -m http.server 8080 &

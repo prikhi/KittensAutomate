@@ -54,6 +54,7 @@ type Msg
     | ToggleGatherCatnip
     | ToggleObserveSky
     | ToggleSendHunters
+    | TogglePraiseSun
     | ToggleBuildField
     | ToggleBuildHut
     | ToggleBuildBarn
@@ -93,6 +94,13 @@ update msg ({ options } as model) =
             let
                 updatedOptions =
                     { options | sendHunters = not options.sendHunters }
+            in
+                ( { model | options = updatedOptions }, Ports.saveOptions options )
+
+        TogglePraiseSun ->
+            let
+                updatedOptions =
+                    { options | praiseSun = not options.praiseSun }
             in
                 ( { model | options = updatedOptions }, Ports.saveOptions options )
 
@@ -143,7 +151,10 @@ update msg ({ options } as model) =
             in
                 ( updatedModel
                 , Cmd.batch
-                    [ buildOrCraftCommand, Commands.sendHuntersCommand model ]
+                    [ buildOrCraftCommand
+                    , Commands.sendHuntersCommand model
+                    , Commands.praiseSunCommand model
+                    ]
                 )
 
 
@@ -174,6 +185,7 @@ view { options, currentTab } =
                     [ checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
                     , checkboxOption options.observeSky ToggleObserveSky "Observe the Sky"
                     , checkboxOption options.sendHunters ToggleSendHunters "Send Hunters"
+                    , checkboxOption options.praiseSun TogglePraiseSun "Praise the Sun"
                     ]
 
                 Build ->

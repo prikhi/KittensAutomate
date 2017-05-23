@@ -14,6 +14,7 @@ type alias Options =
     { gatherCatnip : Bool
     , observeSky : Bool
     , sendHunters : Bool
+    , praiseSun : Bool
     , buildField : Bool
     , buildHut : Bool
     , buildBarn : Bool
@@ -26,6 +27,7 @@ initialOptions =
     { gatherCatnip = False
     , observeSky = False
     , sendHunters = False
+    , praiseSun = False
     , buildField = False
     , buildHut = False
     , buildBarn = False
@@ -58,6 +60,7 @@ type ResourceType
     = Catnip
     | Wood
     | Catpower
+    | Faith
 
 
 type alias Price =

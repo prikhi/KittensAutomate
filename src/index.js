@@ -4,7 +4,7 @@ var $ = require('../node_modules/jquery/dist/jquery.slim.js');
 const localStorageOptionsKey = 'kittens-automate-options';
 const localStorageOptionsVersionKey = 'kittens-automate-options-version';
 
-const optionsVersion = 1;
+const optionsVersion = 2;
 
 function waitForGameData() {
   if (typeof window.gamePage !== "undefined") {
@@ -79,6 +79,12 @@ function loadApp() {
   app.ports.sendHunters.subscribe(function() {
     console.log("Sending Your Hunters.");
     $('#fastHuntContainer a').click();
+  });
+
+  /* praiseSun */
+  app.ports.praiseSun.subscribe(function() {
+    console.log("Praising the Sun.");
+    $('#fastPraiseContainer a').click();
   });
 
 
