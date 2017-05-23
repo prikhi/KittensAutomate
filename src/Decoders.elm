@@ -65,6 +65,9 @@ buildingTypeDecoder =
                 "hut" ->
                     succeed Hut
 
+                "barn" ->
+                    succeed Barn
+
                 _ ->
                     Decode.fail ("Could not decode building type: " ++ str)
     in
