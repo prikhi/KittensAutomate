@@ -113,18 +113,15 @@ view { options } =
             [ style [ ( "margin", "0 0 10px" ), ( "text-align", "center" ) ] ]
             [ text "Kittens Automate" ]
         , checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
-        , Html.br [] []
         , checkboxOption options.buildField ToggleBuildField "Build Fields"
-        , Html.br [] []
         , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
-        , Html.br [] []
         , checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
         ]
 
 
 checkboxOption : Bool -> msg -> String -> Html msg
 checkboxOption value msg content =
-    label []
+    label [ style [ ( "display", "block" ) ] ]
         [ input
             [ type_ "checkbox"
             , checked value
