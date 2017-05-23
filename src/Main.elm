@@ -33,7 +33,31 @@ type alias Flags =
 
 init : Flags -> ( Model, Cmd Msg )
 init { gameData, options } =
-    ( initialModel gameData options, Cmd.none )
+    let
+        cmds =
+            case options of
+                Nothing ->
+                    Cmd.none
+
+                Just options ->
+                    initialCommands options
+                        [ ( .gatherCatnip, Ports.toggleGatherCatnip )
+                        , ( .observeSky, Ports.toggleObserveSky )
+                        ]
+                        |> Cmd.batch
+
+        initialCommands options selectorsAndPorts =
+            case selectorsAndPorts of
+                [] ->
+                    []
+
+                ( selector, optionPort ) :: xs ->
+                    if selector options then
+                        optionPort () :: initialCommands options xs
+                    else
+                        initialCommands options xs
+    in
+        ( initialModel gameData options, cmds )
 
 
 initialModel : Value -> Maybe Options -> Model
@@ -64,7 +88,7 @@ update msg ({ options } as model) =
                     { options | gatherCatnip = not options.gatherCatnip }
             in
                 ( { model | options = updatedOptions }
-                , Cmd.batch [ Ports.toggleGatherCatnip (), Ports.saveOptions options ]
+                , Cmd.batch [ Ports.toggleGatherCatnip (), Ports.saveOptions updatedOptions ]
                 )
 
         ToggleObserveSky ->
@@ -73,7 +97,7 @@ update msg ({ options } as model) =
                     { options | observeSky = not options.observeSky }
             in
                 ( { model | options = updatedOptions }
-                , Cmd.batch [ Ports.toggleObserveSky (), Ports.saveOptions options ]
+                , Cmd.batch [ Ports.toggleObserveSky (), Ports.saveOptions updatedOptions ]
                 )
 
         ToggleSendHunters ->
@@ -81,14 +105,14 @@ update msg ({ options } as model) =
                 updatedOptions =
                     { options | sendHunters = not options.sendHunters }
             in
-                ( { model | options = updatedOptions }, Ports.saveOptions options )
+                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
 
         TogglePraiseSun ->
             let
                 updatedOptions =
                     { options | praiseSun = not options.praiseSun }
             in
-                ( { model | options = updatedOptions }, Ports.saveOptions options )
+                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
 
         ToggleBuildField ->
             let
@@ -97,28 +121,28 @@ update msg ({ options } as model) =
                         | buildField = not options.buildField
                     }
             in
-                ( { model | options = updatedOptions }, Ports.saveOptions options )
+                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
 
         ToggleBuildHut ->
             let
                 updatedOptions =
                     { options | buildHut = not options.buildHut }
             in
-                ( { model | options = updatedOptions }, Ports.saveOptions options )
+                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
 
         ToggleBuildBarn ->
             let
                 updatedOptions =
                     { options | buildBarn = not options.buildBarn }
             in
-                ( { model | options = updatedOptions }, Ports.saveOptions options )
+                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
 
         ToggleCraftWood ->
             let
                 updatedOptions =
                     { options | craftWood = not options.craftWood }
             in
-                ( { model | options = updatedOptions }, Ports.saveOptions options )
+                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
 
         UpdateGameData jsonGameData ->
             let
