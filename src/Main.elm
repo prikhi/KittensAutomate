@@ -76,73 +76,48 @@ initialModel gameData maybeOptions =
 -- Update
 
 
+updateOptions : OptionsMsg -> Options -> Options
+updateOptions msg options =
+    case msg of
+        GatherCatnip ->
+            { options | gatherCatnip = not options.gatherCatnip }
+
+        ObserveSky ->
+            { options | observeSky = not options.observeSky }
+
+        SendHunters ->
+            { options | sendHunters = not options.sendHunters }
+
+        PraiseSun ->
+            { options | praiseSun = not options.praiseSun }
+
+        BuildField ->
+            { options | buildField = not options.buildField }
+
+        BuildHut ->
+            { options | buildHut = not options.buildHut }
+
+        BuildBarn ->
+            { options | buildBarn = not options.buildBarn }
+
+        Messages.CraftWood ->
+            { options | craftWood = not options.craftWood }
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg ({ options } as model) =
     case msg of
         ChangeTab newTab ->
             ( { model | currentTab = newTab }, Cmd.none )
 
-        ToggleGatherCatnip ->
+        ToggleOption subMsg ->
             let
                 updatedOptions =
-                    { options | gatherCatnip = not options.gatherCatnip }
+                    updateOptions subMsg options
             in
                 ( { model | options = updatedOptions }
-                , Cmd.batch [ Ports.toggleGatherCatnip (), Ports.saveOptions updatedOptions ]
+                , Ports.saveOptions updatedOptions
                 )
-
-        ToggleObserveSky ->
-            let
-                updatedOptions =
-                    { options | observeSky = not options.observeSky }
-            in
-                ( { model | options = updatedOptions }
-                , Cmd.batch [ Ports.toggleObserveSky (), Ports.saveOptions updatedOptions ]
-                )
-
-        ToggleSendHunters ->
-            let
-                updatedOptions =
-                    { options | sendHunters = not options.sendHunters }
-            in
-                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
-
-        TogglePraiseSun ->
-            let
-                updatedOptions =
-                    { options | praiseSun = not options.praiseSun }
-            in
-                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
-
-        ToggleBuildField ->
-            let
-                updatedOptions =
-                    { options
-                        | buildField = not options.buildField
-                    }
-            in
-                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
-
-        ToggleBuildHut ->
-            let
-                updatedOptions =
-                    { options | buildHut = not options.buildHut }
-            in
-                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
-
-        ToggleBuildBarn ->
-            let
-                updatedOptions =
-                    { options | buildBarn = not options.buildBarn }
-            in
-                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
-
-        ToggleCraftWood ->
-            let
-                updatedOptions =
-                    { options | craftWood = not options.craftWood }
-            in
-                ( { model | options = updatedOptions }, Ports.saveOptions updatedOptions )
 
         UpdateGameData jsonGameData ->
             let
@@ -202,10 +177,10 @@ view { options, currentTab } =
         currentTabContents =
             case currentTab of
                 General ->
-                    [ checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
-                    , checkboxOption options.observeSky ToggleObserveSky "Observe the Sky"
-                    , checkboxOption options.sendHunters ToggleSendHunters "Send Hunters"
-                    , checkboxOption options.praiseSun TogglePraiseSun "Praise the Sun"
+                    [ checkboxOption options.gatherCatnip (ToggleOption GatherCatnip) "Gather Catnip"
+                    , checkboxOption options.observeSky (ToggleOption ObserveSky) "Observe the Sky"
+                    , checkboxOption options.sendHunters (ToggleOption SendHunters) "Send Hunters"
+                    , checkboxOption options.praiseSun (ToggleOption PraiseSun) "Praise the Sun"
                     ]
 
                 Build ->

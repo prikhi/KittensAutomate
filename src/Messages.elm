@@ -1,4 +1,4 @@
-module Messages exposing (Msg(..))
+module Messages exposing (Msg(..), OptionsMsg(..))
 
 import Json.Decode exposing (Value)
 import Models exposing (Tab)
@@ -6,12 +6,16 @@ import Models exposing (Tab)
 
 type Msg
     = ChangeTab Tab
-    | ToggleGatherCatnip
-    | ToggleObserveSky
-    | ToggleSendHunters
-    | TogglePraiseSun
-    | ToggleBuildField
-    | ToggleBuildHut
-    | ToggleBuildBarn
-    | ToggleCraftWood
+    | ToggleOption OptionsMsg
     | UpdateGameData Value
+
+
+type OptionsMsg
+    = GatherCatnip
+    | ObserveSky
+    | SendHunters
+    | PraiseSun
+    | BuildField
+    | BuildHut
+    | BuildBarn
+    | CraftWood

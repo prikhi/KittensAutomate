@@ -26,9 +26,10 @@ optionSelector recipeType =
 
 message : RecipeType -> Msg
 message recipeType =
-    case recipeType of
-        CraftWood ->
-            ToggleCraftWood
+    ToggleOption <|
+        case recipeType of
+            CraftWood ->
+                Messages.CraftWood
 
 
 clickCommand : RecipeType -> Cmd msg

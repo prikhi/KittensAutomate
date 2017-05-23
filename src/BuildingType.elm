@@ -1,6 +1,6 @@
 module BuildingType exposing (..)
 
-import Messages exposing (Msg(..))
+import Messages exposing (Msg(ToggleOption), OptionsMsg(..))
 import Models exposing (Options, BuildingType(..))
 import Ports
 
@@ -38,15 +38,16 @@ optionSelector buildingType =
 
 message : BuildingType -> Msg
 message buildingType =
-    case buildingType of
-        Field ->
-            ToggleBuildField
+    ToggleOption <|
+        case buildingType of
+            Field ->
+                BuildField
 
-        Hut ->
-            ToggleBuildHut
+            Hut ->
+                BuildHut
 
-        Barn ->
-            ToggleBuildBarn
+            Barn ->
+                BuildBarn
 
 
 clickCommand : BuildingType -> Cmd msg
