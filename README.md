@@ -14,7 +14,6 @@ exist:
 TODO:
 
 * Save Options & Load on Page Load
-* Split buildings & recipes into tabs
 * Population management
     * minimum amount of farmers to never starve
     * always max engineers

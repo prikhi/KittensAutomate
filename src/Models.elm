@@ -3,6 +3,7 @@ module Models exposing (..)
 
 type alias Model =
     { options : Options
+    , currentTab : Tab
     , currentResources : List CurrentResource
     , buildings : List Building
     , recipes : List Recipe
@@ -30,6 +31,12 @@ initialOptions =
     , buildBarn = False
     , craftWood = False
     }
+
+
+type Tab
+    = General
+    | Build
+    | Craft
 
 
 type BuildingType

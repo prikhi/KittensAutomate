@@ -2,11 +2,11 @@ module Main exposing (main)
 
 import Json.Decode exposing (Value)
 import Html exposing (Html, div, label, input, text)
-import Html.Attributes exposing (type_, checked, style)
+import Html.Attributes exposing (type_, checked, style, href)
 import Html.Events exposing (onClick)
 import Commands
 import Decoders exposing (proceesGameData)
-import Models exposing (Model, Options, initialOptions, BuildingType(..))
+import Models exposing (Model, Options, Tab(..), initialOptions, BuildingType(..))
 import Ports
 
 
@@ -33,6 +33,7 @@ initialModel : Value -> Model
 initialModel =
     proceesGameData
         { options = initialOptions
+        , currentTab = General
         , buildings = []
         , currentResources = []
         , recipes = []
@@ -44,7 +45,8 @@ initialModel =
 
 
 type Msg
-    = ToggleGatherCatnip
+    = ChangeTab Tab
+    | ToggleGatherCatnip
     | ToggleObserveSky
     | ToggleSendHunters
     | ToggleBuildField
@@ -61,6 +63,9 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg ({ options } as model) =
     case msg of
+        ChangeTab newTab ->
+            ( { model | currentTab = newTab }, Cmd.none )
+
         ToggleGatherCatnip ->
             let
                 updatedOptions =
@@ -138,19 +143,57 @@ update msg ({ options } as model) =
 
 
 view : Model -> Html Msg
-view { options } =
-    div [ style [ ( "margin", "15px 5px" ), ( "padding", "10px 5px" ), ( "border", "solid 1px black" ) ] ]
-        [ Html.h5
-            [ style [ ( "margin", "0 0 10px" ), ( "text-align", "center" ) ] ]
-            [ text "Kittens Automate" ]
-        , checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
-        , checkboxOption options.observeSky ToggleObserveSky "Observe the Sky"
-        , checkboxOption options.sendHunters ToggleSendHunters "Send Hunters"
-        , checkboxOption options.buildField ToggleBuildField "Build Fields"
-        , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
-        , checkboxOption options.buildBarn ToggleBuildBarn "Build Barns"
-        , checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
-        ]
+view { options, currentTab } =
+    let
+        tabLinks =
+            [ ( General, "General" )
+            , ( Build, "Build" )
+            , ( Craft, "Craft" )
+            ]
+                |> List.map makeTabLink
+                |> List.intersperse (text " | ")
+
+        makeTabLink ( tab, name ) =
+            if currentTab == tab then
+                Html.b [] [ text name ]
+            else
+                Html.a [ onClick (ChangeTab tab), href "#" ] [ text name ]
+
+        currentTabContents =
+            case currentTab of
+                General ->
+                    [ checkboxOption options.gatherCatnip ToggleGatherCatnip "Gather Catnip"
+                    , checkboxOption options.observeSky ToggleObserveSky "Observe the Sky"
+                    , checkboxOption options.sendHunters ToggleSendHunters "Send Hunters"
+                    ]
+
+                Build ->
+                    [ checkboxOption options.buildField ToggleBuildField "Build Fields"
+                    , checkboxOption options.buildHut ToggleBuildHut "Build Huts"
+                    , checkboxOption options.buildBarn ToggleBuildBarn "Build Barns"
+                    ]
+
+                Craft ->
+                    [ checkboxOption options.craftWood ToggleCraftWood "Craft Wood"
+                    ]
+    in
+        div [ style [ ( "margin", "15px 5px" ), ( "padding", "10px 5px" ), ( "border", "solid 1px black" ) ] ]
+            [ Html.h3
+                [ style
+                    [ ( "margin", "0 0 10px" )
+                    , ( "text-align", "center" )
+                    ]
+                ]
+                [ text "Kittens Automate" ]
+            , div
+                [ style
+                    [ ( "margin-bottom", "10px" )
+                    , ( "text-align", "center" )
+                    ]
+                ]
+                tabLinks
+            , div [] <| currentTabContents
+            ]
 
 
 checkboxOption : Bool -> msg -> String -> Html msg
