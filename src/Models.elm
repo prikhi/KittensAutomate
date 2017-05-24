@@ -18,11 +18,14 @@ type alias Options =
     , buildField : Bool
     , buildHut : Bool
     , buildLibrary : Bool
+    , buildLogHouse : Bool
     , buildAcademy : Bool
     , buildBarn : Bool
     , buildMine : Bool
+    , buildLumberMill : Bool
     , buildSmelter : Bool
     , buildWorkshop : Bool
+    , buildTradepost : Bool
     , craftWood : Bool
     }
 
@@ -35,12 +38,15 @@ initialOptions =
     , praiseSun = False
     , buildField = False
     , buildHut = False
+    , buildLogHouse = False
     , buildLibrary = False
     , buildAcademy = False
     , buildBarn = False
     , buildMine = False
+    , buildLumberMill = False
     , buildSmelter = False
     , buildWorkshop = False
+    , buildTradepost = False
     , craftWood = False
     }
 
@@ -54,12 +60,15 @@ type Tab
 type BuildingType
     = Field
     | Hut
+    | LogHouse
     | Library
     | Academy
     | Barn
     | Mine
+    | LumberMill
     | Smelter
     | Workshop
+    | Tradepost
 
 
 type alias Building =
@@ -75,6 +84,8 @@ type ResourceType
     = Catnip
     | Wood
     | Minerals
+    | Iron
+    | Gold
     | Catpower
     | Science
     | Faith

@@ -17,10 +17,13 @@ type OptionsMsg
     | PraiseSun
     | BuildField
     | BuildHut
+    | BuildLogHouse
     | BuildLibrary
     | BuildAcademy
     | BuildBarn
     | BuildMine
+    | BuildLumberMill
     | BuildSmelter
     | BuildWorkshop
+    | BuildTradepost
     | CraftWood

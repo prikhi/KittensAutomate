@@ -65,6 +65,9 @@ buildingTypeDecoder =
                 "hut" ->
                     succeed Hut
 
+                "logHouse" ->
+                    succeed LogHouse
+
                 "library" ->
                     succeed Library
 
@@ -77,11 +80,17 @@ buildingTypeDecoder =
                 "mine" ->
                     succeed Mine
 
+                "lumberMill" ->
+                    succeed LumberMill
+
                 "smelter" ->
                     succeed Smelter
 
                 "workshop" ->
                     succeed Workshop
+
+                "tradepost" ->
+                    succeed Tradepost
 
                 _ ->
                     Decode.fail ("Could not decode building type: " ++ str)
@@ -112,6 +121,12 @@ resourceTypeDecoder =
 
                 "minerals" ->
                     succeed Minerals
+
+                "iron" ->
+                    succeed Iron
+
+                "gold" ->
+                    succeed Gold
 
                 "manpower" ->
                     succeed Catpower

@@ -5,7 +5,7 @@ An Automation UI for Kittens Game written in Elm.
 The script is still in early development, right now you can automatically:
 
 * Gather Catnip(fixed at 10 clicks/sec atm)
-* Build Catnip Fields, Huts, & Barns(when resources >= 90% of max)
+* Build Buildings When Resources >= 90% of Max(for buildings that don't require craftable resources)
 * Refine Catnip into Wood
 * Observe Astronomical Events
 * Send Your Hunters when at Max Catpower
@@ -13,11 +13,14 @@ The script is still in early development, right now you can automatically:
 
 TODO:
 
+* Fix automation when button not displayed
+* Fix parsing of JSON for buildings with multiple stages
+* Incorporate workshop discounts into hut price calculation
+    * See `gamePage.workshop -> effects -> hutPriceRatio`
 * Population management
     * minimum amount of farmers to never starve
     * always max engineers
     * sliders to control distribution percentages
-* Fix automation when button not displayed
 * Configurable catnip click rate
 * Configurable resource ratios for auto building/crafting
 * More auto crafting/building options
@@ -25,7 +28,11 @@ TODO:
 * Auto research
 * Fullscreen button, turns panel into large modal window(when lots of UI options)
 * Refactor Ports(click link, click building button, click craft button)
-* Fix parsing of JSON for buildings with multiple stages
+* Refactor Options/Messages
+    * Maybe use Dict for options so we can represent options w/ strings instead of attributes
+* Allow options migrations(so different set of options don't clear previous choices)
+* FIgure out buying strategy for resources with no cap
+    * Something like when cost is 10% of current?
 
 
 ```

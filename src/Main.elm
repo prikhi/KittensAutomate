@@ -97,6 +97,9 @@ updateOptions msg options =
         BuildHut ->
             { options | buildHut = not options.buildHut }
 
+        BuildLogHouse ->
+            { options | buildLogHouse = not options.buildLogHouse }
+
         BuildLibrary ->
             { options | buildLibrary = not options.buildLibrary }
 
@@ -109,11 +112,17 @@ updateOptions msg options =
         BuildMine ->
             { options | buildMine = not options.buildMine }
 
+        BuildLumberMill ->
+            { options | buildLumberMill = not options.buildLumberMill }
+
         BuildSmelter ->
             { options | buildSmelter = not options.buildSmelter }
 
         BuildWorkshop ->
             { options | buildWorkshop = not options.buildWorkshop }
+
+        BuildTradepost ->
+            { options | buildTradepost = not options.buildTradepost }
 
         Messages.CraftWood ->
             { options | craftWood = not options.craftWood }

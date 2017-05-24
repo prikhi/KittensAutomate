@@ -7,7 +7,7 @@ import Ports
 
 all : List BuildingType
 all =
-    [ Field, Hut, Library, Academy, Barn, Mine, Smelter, Workshop ]
+    [ Field, Hut, LogHouse, Library, Academy, Barn, Mine, LumberMill, Smelter, Workshop, Tradepost ]
 
 
 toString : BuildingType -> String
@@ -18,6 +18,9 @@ toString buildingType =
 
         Hut ->
             "Huts"
+
+        LogHouse ->
+            "Log Houses"
 
         Library ->
             "Libraries"
@@ -31,11 +34,17 @@ toString buildingType =
         Mine ->
             "Mines"
 
+        LumberMill ->
+            "Lumber Mills"
+
         Smelter ->
             "Smelters"
 
         Workshop ->
-            "Workshop"
+            "Workshops"
+
+        Tradepost ->
+            "Tradeposts"
 
 
 optionSelector : BuildingType -> (Options -> Bool)
@@ -46,6 +55,9 @@ optionSelector buildingType =
 
         Hut ->
             .buildHut
+
+        LogHouse ->
+            .buildLogHouse
 
         Library ->
             .buildLibrary
@@ -59,11 +71,17 @@ optionSelector buildingType =
         Mine ->
             .buildMine
 
+        LumberMill ->
+            .buildLumberMill
+
         Smelter ->
             .buildSmelter
 
         Workshop ->
             .buildWorkshop
+
+        Tradepost ->
+            .buildTradepost
 
 
 message : BuildingType -> Msg
@@ -75,6 +93,9 @@ message buildingType =
 
             Hut ->
                 BuildHut
+
+            LogHouse ->
+                BuildLogHouse
 
             Library ->
                 BuildLibrary
@@ -88,11 +109,17 @@ message buildingType =
             Mine ->
                 BuildMine
 
+            LumberMill ->
+                BuildLumberMill
+
             Smelter ->
                 BuildSmelter
 
             Workshop ->
                 BuildWorkshop
+
+            Tradepost ->
+                BuildTradepost
 
 
 clickCommand : BuildingType -> Cmd msg
@@ -104,6 +131,9 @@ clickCommand buildingType =
 
             Hut ->
                 "Hut"
+
+            LogHouse ->
+                "Log House"
 
             Library ->
                 "Library"
@@ -117,8 +147,14 @@ clickCommand buildingType =
             Mine ->
                 "Mine"
 
+            LumberMill ->
+                "Lumber Mill"
+
             Smelter ->
                 "Smelter"
 
             Workshop ->
                 "Workshop"
+
+            Tradepost ->
+                "Tradepost"
