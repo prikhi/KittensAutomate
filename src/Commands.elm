@@ -25,9 +25,6 @@ getBuildCommand model =
 getCraftCommand : Model -> Maybe (Cmd msg)
 getCraftCommand model =
     let
-        recipeTypes =
-            [ CraftWood ]
-
         commands =
             List.filterMap
                 (\rType ->
@@ -36,7 +33,8 @@ getCraftCommand model =
                         (RecipeType.clickCommand rType)
                         model
                 )
-                RecipeType.all
+            <|
+                List.reverse RecipeType.all
     in
         List.head commands
 
@@ -72,27 +70,60 @@ praiseSunCommand model =
 
 
 buildCommand : BuildingType -> (Options -> Bool) -> Cmd msg -> Model -> Maybe (Cmd msg)
-buildCommand =
-    buildCraftCommand .buildingType
-        .buildings
-        (\i p -> { p | amount = i.priceRatio ^ (toFloat i.count) * p.amount })
+buildCommand buildingType optionSelector cmd model =
+    let
+        shouldBuild =
+            shouldBuildOrCraft .buildingType
+                .buildings
+                (\i p -> { p | amount = i.priceRatio ^ (toFloat i.count) * p.amount })
+                buildingType
+                optionSelector
+                model
+    in
+        if shouldBuild then
+            Just cmd
+        else
+            Nothing
 
 
-craftCommand : RecipeType -> (Options -> Bool) -> Cmd msg -> Model -> Maybe (Cmd msg)
-craftCommand =
-    buildCraftCommand .recipeType .recipes (flip always)
+craftCommand : RecipeType -> (Options -> Bool) -> (Int -> Cmd msg) -> Model -> Maybe (Cmd msg)
+craftCommand recipeType optionSelector craftCmd ({ options, currentResources } as model) =
+    let
+        shouldCraft =
+            shouldBuildOrCraft .recipeType .recipes (flip always) recipeType optionSelector model
+
+        maybeRecipe =
+            List.filter (\i -> i.recipeType == recipeType) model.recipes |> List.head
+
+        prices =
+            maybeRecipe |> Maybe.map .prices |> Maybe.withDefault []
+
+        amountToCraft =
+            List.map getCraftableAmountForResource prices
+                |> List.minimum
+                |> Maybe.withDefault 0
+
+        getCraftableAmountForResource { resourceType, amount } =
+            List.filter (\i -> i.resourceType == resourceType) currentResources
+                |> List.head
+                |> Maybe.map (\{ current } -> round (0.15 * current / amount))
+                |> Maybe.withDefault 0
+    in
+        if shouldCraft then
+            Just <| craftCmd amountToCraft
+        else
+            Nothing
 
 
-buildCraftCommand :
+shouldBuildOrCraft :
     ({ a | prices : List Price, unlocked : Bool } -> b)
     -> (Model -> List { a | prices : List Price, unlocked : Bool })
     -> ({ a | prices : List Price, unlocked : Bool } -> Price -> Price)
     -> b
     -> (Options -> Bool)
-    -> Cmd msg
     -> Model
-    -> Maybe (Cmd msg)
-buildCraftCommand typeSelector modelSelector priceFunc desiredType optionsSelector cmd ({ options, currentResources } as model) =
+    -> Bool
+shouldBuildOrCraft typeSelector modelSelector priceFunc desiredType optionsSelector ({ options, currentResources } as model) =
     let
         enabled =
             optionsSelector options && unlocked
@@ -111,10 +142,7 @@ buildCraftCommand typeSelector modelSelector priceFunc desiredType optionsSelect
         canAfford =
             List.length prices > 0 && List.all (enoughResources currentResources) prices
     in
-        if enabled && canAfford then
-            Just cmd
-        else
-            Nothing
+        enabled && canAfford
 
 
 enoughResources : List CurrentResource -> Price -> Bool

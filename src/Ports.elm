@@ -23,3 +23,6 @@ port praiseSun : () -> Cmd msg
 
 
 port clickBuildingButton : String -> Cmd msg
+
+
+port craftResource : ( String, Int ) -> Cmd msg

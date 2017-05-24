@@ -7,7 +7,7 @@ import Ports
 
 all : List RecipeType
 all =
-    [ CraftWood ]
+    [ CraftWood, CraftBeam, CraftSlab ]
 
 
 toString : RecipeType -> String
@@ -16,12 +16,24 @@ toString recipeType =
         CraftWood ->
             "Wood"
 
+        CraftBeam ->
+            "Beams"
+
+        CraftSlab ->
+            "Slabs"
+
 
 optionSelector : RecipeType -> (Options -> Bool)
 optionSelector recipeType =
     case recipeType of
         CraftWood ->
             .craftWood
+
+        CraftBeam ->
+            .craftBeam
+
+        CraftSlab ->
+            .craftSlab
 
 
 message : RecipeType -> Msg
@@ -31,9 +43,22 @@ message recipeType =
             CraftWood ->
                 Messages.CraftWood
 
+            CraftBeam ->
+                Messages.CraftBeam
 
-clickCommand : RecipeType -> Cmd msg
+            CraftSlab ->
+                Messages.CraftSlab
+
+
+clickCommand : RecipeType -> (Int -> Cmd msg)
 clickCommand recipeType =
-    case recipeType of
-        CraftWood ->
-            Ports.clickBuildingButton "Refine catnip"
+    curry Ports.craftResource <|
+        case recipeType of
+            CraftWood ->
+                "wood"
+
+            CraftBeam ->
+                "beam"
+
+            CraftSlab ->
+                "slab"

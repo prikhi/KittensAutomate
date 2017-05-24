@@ -127,6 +127,12 @@ updateOptions msg options =
         Messages.CraftWood ->
             { options | craftWood = not options.craftWood }
 
+        Messages.CraftBeam ->
+            { options | craftBeam = not options.craftBeam }
+
+        Messages.CraftSlab ->
+            { options | craftSlab = not options.craftSlab }
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg ({ options } as model) =

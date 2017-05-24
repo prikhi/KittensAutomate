@@ -27,3 +27,5 @@ type OptionsMsg
     | BuildWorkshop
     | BuildTradepost
     | CraftWood
+    | CraftBeam
+    | CraftSlab

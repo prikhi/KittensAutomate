@@ -174,6 +174,12 @@ recipeTypeDecoder =
                 "wood" ->
                     succeed CraftWood
 
+                "beam" ->
+                    succeed CraftBeam
+
+                "slab" ->
+                    succeed CraftSlab
+
                 _ ->
                     Decode.fail ("Could not decode recipe type: " ++ str)
     in

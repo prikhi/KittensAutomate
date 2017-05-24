@@ -27,6 +27,8 @@ type alias Options =
     , buildWorkshop : Bool
     , buildTradepost : Bool
     , craftWood : Bool
+    , craftBeam : Bool
+    , craftSlab : Bool
     }
 
 
@@ -48,6 +50,8 @@ initialOptions =
     , buildWorkshop = False
     , buildTradepost = False
     , craftWood = False
+    , craftBeam = False
+    , craftSlab = False
     }
 
 
@@ -106,6 +110,8 @@ type alias CurrentResource =
 
 type RecipeType
     = CraftWood
+    | CraftBeam
+    | CraftSlab
 
 
 type alias Recipe =

@@ -4,7 +4,7 @@ var $ = require('../node_modules/jquery/dist/jquery.slim.js');
 const localStorageOptionsKey = 'kittens-automate-options';
 const localStorageOptionsVersionKey = 'kittens-automate-options-version';
 
-const optionsVersion = 4;
+const optionsVersion = 5;
 
 function waitForGameData() {
   if (typeof window.gamePage !== "undefined") {
@@ -92,6 +92,17 @@ function loadApp() {
   app.ports.clickBuildingButton.subscribe(function(buttonText) {
     console.log("Building " + buttonText + ".");
     $('.btnContent:contains("' + buttonText + '")').click();
+  });
+
+  /* Call Game Function to Craft a Recipe */
+  var isBuilding = false;
+  app.ports.craftResource.subscribe(function(args) {
+    if (isBuilding) { return; }
+    isBuilding = true;
+    var [recipeName, count] = args;
+    console.log("Crafting " + count + " " + recipeName + ".");
+    window.gamePage.craft(recipeName, count);
+    isBuilding = false;
   });
 }
 
