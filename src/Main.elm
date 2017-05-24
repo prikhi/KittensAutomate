@@ -129,9 +129,20 @@ update msg ({ options } as model) =
             let
                 updatedOptions =
                     updateOptions subMsg options
+
+                toggleCmd =
+                    case subMsg of
+                        ObserveSky ->
+                            Ports.toggleObserveSky ()
+
+                        GatherCatnip ->
+                            Ports.toggleGatherCatnip ()
+
+                        _ ->
+                            Cmd.none
             in
                 ( { model | options = updatedOptions }
-                , Ports.saveOptions updatedOptions
+                , Cmd.batch [ Ports.saveOptions updatedOptions, toggleCmd ]
                 )
 
         UpdateGameData jsonGameData ->
