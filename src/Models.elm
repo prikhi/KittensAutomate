@@ -4,6 +4,7 @@ module Models exposing (..)
 type alias Model =
     { options : Options
     , currentTab : Tab
+    , hutPriceReduction : Float
     , currentResources : List CurrentResource
     , buildings : List Building
     , recipes : List Recipe

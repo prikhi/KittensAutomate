@@ -65,6 +65,7 @@ initialModel gameData maybeOptions =
     proceesGameData
         { options = maybeOptions |> Maybe.withDefault initialOptions
         , currentTab = General
+        , hutPriceReduction = 0
         , buildings = []
         , currentResources = []
         , recipes = []

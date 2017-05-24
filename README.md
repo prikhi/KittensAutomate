@@ -15,8 +15,7 @@ TODO:
 
 * Fix building automation when button not displayed
 * Fix parsing of JSON for buildings with multiple stages
-* Incorporate workshop discounts into hut price calculation
-    * See `gamePage.workshop -> effects -> hutPriceRatio`
+* Craft multiple recipes with non-overlapping ingredients at once
 * Population management
     * minimum amount of farmers to never starve
         * rebalance in cold winter or whenever catnip production is negative?

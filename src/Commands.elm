@@ -72,13 +72,22 @@ praiseSunCommand model =
 buildCommand : BuildingType -> (Options -> Bool) -> Cmd msg -> Model -> Maybe (Cmd msg)
 buildCommand buildingType optionSelector cmd model =
     let
+        priceReduction =
+            if buildingType == Hut then
+                model.hutPriceReduction
+            else
+                0
+
+        priceFunction item price =
+            { price
+                | amount =
+                    (item.priceRatio + priceReduction)
+                        ^ (toFloat item.count)
+                        * price.amount
+            }
+
         shouldBuild =
-            shouldBuildOrCraft .buildingType
-                .buildings
-                (\i p -> { p | amount = i.priceRatio ^ (toFloat i.count) * p.amount })
-                buildingType
-                optionSelector
-                model
+            shouldBuildOrCraft .buildingType .buildings priceFunction buildingType optionSelector model
     in
         if shouldBuild then
             Just cmd
@@ -87,7 +96,7 @@ buildCommand buildingType optionSelector cmd model =
 
 
 craftCommand : RecipeType -> (Options -> Bool) -> (Int -> Cmd msg) -> Model -> Maybe (Cmd msg)
-craftCommand recipeType optionSelector craftCmd ({ options, currentResources } as model) =
+craftCommand recipeType optionSelector craftCmd ({ currentResources } as model) =
     let
         shouldCraft =
             shouldBuildOrCraft .recipeType .recipes (flip always) recipeType optionSelector model
