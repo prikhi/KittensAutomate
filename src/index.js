@@ -4,7 +4,7 @@ var $ = require('../node_modules/jquery/dist/jquery.slim.js');
 const localStorageOptionsKey = 'kittens-automate-options';
 const localStorageOptionsVersionKey = 'kittens-automate-options-version';
 
-const optionsVersion = 5;
+const optionsVersion = 6;
 
 function waitForGameData() {
   if (typeof window.gamePage !== "undefined") {

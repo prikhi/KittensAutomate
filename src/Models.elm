@@ -30,6 +30,10 @@ type alias Options =
     , craftWood : Bool
     , craftBeam : Bool
     , craftSlab : Bool
+    , craftPlate : Bool
+    , craftSteel : Bool
+    , craftKerosene : Bool
+    , craftThorium : Bool
     }
 
 
@@ -53,6 +57,10 @@ initialOptions =
     , craftWood = False
     , craftBeam = False
     , craftSlab = False
+    , craftPlate = False
+    , craftSteel = False
+    , craftKerosene = False
+    , craftThorium = False
     }
 
 
@@ -89,8 +97,11 @@ type ResourceType
     = Catnip
     | Wood
     | Minerals
+    | Coal
     | Iron
     | Gold
+    | Uranium
+    | Oil
     | Catpower
     | Science
     | Faith
@@ -113,6 +124,10 @@ type RecipeType
     = CraftWood
     | CraftBeam
     | CraftSlab
+    | CraftPlate
+    | CraftSteel
+    | CraftKerosene
+    | CraftThorium
 
 
 type alias Recipe =

@@ -125,11 +125,20 @@ resourceTypeDecoder =
                 "minerals" ->
                     succeed Minerals
 
+                "coal" ->
+                    succeed Coal
+
                 "iron" ->
                     succeed Iron
 
                 "gold" ->
                     succeed Gold
+
+                "uranium" ->
+                    succeed Uranium
+
+                "oil" ->
+                    succeed Oil
 
                 "manpower" ->
                     succeed Catpower
@@ -182,6 +191,18 @@ recipeTypeDecoder =
 
                 "slab" ->
                     succeed CraftSlab
+
+                "plate" ->
+                    succeed CraftPlate
+
+                "steel" ->
+                    succeed CraftSteel
+
+                "kerosene" ->
+                    succeed CraftKerosene
+
+                "thorium" ->
+                    succeed CraftThorium
 
                 _ ->
                     Decode.fail ("Could not decode recipe type: " ++ str)

@@ -7,7 +7,14 @@ import Ports
 
 all : List RecipeType
 all =
-    [ CraftWood, CraftBeam, CraftSlab ]
+    [ CraftWood
+    , CraftBeam
+    , CraftSlab
+    , CraftPlate
+    , CraftSteel
+    , CraftKerosene
+    , CraftThorium
+    ]
 
 
 toString : RecipeType -> String
@@ -22,6 +29,18 @@ toString recipeType =
         CraftSlab ->
             "Slabs"
 
+        CraftPlate ->
+            "Plates"
+
+        CraftSteel ->
+            "Steel"
+
+        CraftKerosene ->
+            "Kerosene"
+
+        CraftThorium ->
+            "Thorium"
+
 
 optionSelector : RecipeType -> (Options -> Bool)
 optionSelector recipeType =
@@ -34,6 +53,18 @@ optionSelector recipeType =
 
         CraftSlab ->
             .craftSlab
+
+        CraftPlate ->
+            .craftPlate
+
+        CraftSteel ->
+            .craftSteel
+
+        CraftKerosene ->
+            .craftKerosene
+
+        CraftThorium ->
+            .craftThorium
 
 
 message : RecipeType -> Msg
@@ -49,6 +80,18 @@ message recipeType =
             CraftSlab ->
                 Messages.CraftSlab
 
+            CraftPlate ->
+                Messages.CraftPlate
+
+            CraftSteel ->
+                Messages.CraftSteel
+
+            CraftKerosene ->
+                Messages.CraftKerosene
+
+            CraftThorium ->
+                Messages.CraftThorium
+
 
 clickCommand : RecipeType -> (Int -> Cmd msg)
 clickCommand recipeType =
@@ -62,3 +105,15 @@ clickCommand recipeType =
 
             CraftSlab ->
                 "slab"
+
+            CraftPlate ->
+                "plate"
+
+            CraftSteel ->
+                "steel"
+
+            CraftKerosene ->
+                "kerosene"
+
+            CraftThorium ->
+                "thorium"

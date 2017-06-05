@@ -13,6 +13,7 @@ The script is still in early development, right now you can automatically:
 
 TODO:
 
+* Account for metaphysics price reductions
 * Fix building automation when button not displayed
 * Fix parsing of JSON for buildings with multiple stages
 * Craft multiple recipes with non-overlapping ingredients at once
@@ -32,7 +33,7 @@ TODO:
 * Refactor Options/Messages
     * Maybe use Dict for options so we can represent options w/ strings instead of attributes
 * Allow options migrations(so different set of options don't clear previous choices)
-* FIgure out buying strategy for resources with no cap
+* Figure out buying strategy for resources with no cap
     * Something like when cost is 10% of current?
 
 

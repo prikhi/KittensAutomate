@@ -29,3 +29,7 @@ type OptionsMsg
     | CraftWood
     | CraftBeam
     | CraftSlab
+    | CraftPlate
+    | CraftSteel
+    | CraftKerosene
+    | CraftThorium
