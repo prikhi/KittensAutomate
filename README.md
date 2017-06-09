@@ -6,14 +6,13 @@ The script is still in early development, right now you can automatically:
 
 * Gather Catnip(fixed at 10 clicks/sec atm)
 * Build Buildings When Resources >= 90% of Max(for buildings that don't require craftable resources)
-* Craft Wood, Beams, Slabs When Resources >= 90% of Max, Using 15% of Available Resources
+* Craft Items When Resources >= 90% of Max, Using 15% of Available Resources(for items that don't require craftable resources)
 * Observe Astronomical Events
 * Send Your Hunters when at Max Catpower
 * Praise the Sun when at Max Faith
 
 TODO:
 
-* Account for metaphysics price reductions
 * Fix building automation when button not displayed
 * Fix parsing of JSON for buildings with multiple stages
 * Craft multiple recipes with non-overlapping ingredients at once

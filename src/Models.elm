@@ -5,6 +5,7 @@ type alias Model =
     { options : Options
     , currentTab : Tab
     , hutPriceReduction : Float
+    , priceReduction : Float
     , currentResources : List CurrentResource
     , buildings : List Building
     , recipes : List Recipe

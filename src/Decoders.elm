@@ -14,12 +14,13 @@ proceesGameData model gameData =
             Err error ->
                 Debug.crash <| "Failed to Decode Game Data " ++ error
 
-            Ok { currentResources, buildings, recipes, hutPriceReduction } ->
+            Ok { currentResources, buildings, recipes, hutPriceReduction, priceReduction } ->
                 { model
                     | buildings = List.filterMap (\x -> x) buildings
                     , currentResources = List.filterMap (\x -> x) currentResources
                     , recipes = List.filterMap (\x -> x) recipes
                     , hutPriceReduction = hutPriceReduction
+                    , priceReduction = priceReduction
                 }
 
 
@@ -28,6 +29,7 @@ type alias GameData =
     , buildings : List (Maybe Building)
     , recipes : List (Maybe Recipe)
     , hutPriceReduction : Float
+    , priceReduction : Float
     }
 
 
@@ -38,7 +40,7 @@ decodeGameData =
 
 gameDataDecoder : Decode.Decoder GameData
 gameDataDecoder =
-    Decode.map4 GameData
+    Decode.map5 GameData
         (Decode.field "resPool" <|
             Decode.field "resources" <|
                 Decode.list (Decode.maybe currentResourceDecoder)
@@ -55,6 +57,7 @@ gameDataDecoder =
                     Decode.maybe (Decode.field "recipeRef" recipeDecoder)
         )
         (Decode.at [ "globalEffectsCached", "hutPriceRatio" ] Decode.float)
+        (Decode.at [ "globalEffectsCached", "priceRatio" ] Decode.float)
 
 
 buildingTypeDecoder : Decode.Decoder BuildingType

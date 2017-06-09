@@ -74,14 +74,48 @@ buildCommand buildingType optionSelector cmd model =
     let
         priceReduction =
             if buildingType == Hut then
-                model.hutPriceReduction
+                model.hutPriceReduction + model.priceReduction
             else
-                0
+                model.priceReduction
+
+        hyperbolicEffect effect limit =
+            let
+                effect_ =
+                    abs effect
+
+                maxUndiminished =
+                    0.75 * limit
+
+                diminishedPortion =
+                    effect_ - maxUndiminished
+
+                delta =
+                    0.25 * limit
+
+                diminishedEffect =
+                    (1 - (delta / (diminishedPortion + delta))) * delta
+
+                totalEffect =
+                    maxUndiminished + diminishedEffect
+
+                totalEffect_ =
+                    if effect < 0 then
+                        -1 * totalEffect
+                    else
+                        totalEffect
+            in
+                if effect_ <= maxUndiminished then
+                    effect
+                else
+                    totalEffect_
+
+        calculatePriceRatio ratio =
+            ratio + hyperbolicEffect priceReduction (ratio - 1)
 
         priceFunction item price =
             { price
                 | amount =
-                    (item.priceRatio + priceReduction)
+                    (calculatePriceRatio item.priceRatio)
                         ^ (toFloat item.count)
                         * price.amount
             }
