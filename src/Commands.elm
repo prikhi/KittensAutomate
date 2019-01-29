@@ -149,7 +149,7 @@ craftCommand recipeType optionSelector craftCmd ({ currentResources } as model) 
         getCraftableAmountForResource { resourceType, amount } =
             List.filter (\i -> i.resourceType == resourceType) currentResources
                 |> List.head
-                |> Maybe.map (\{ current } -> round (0.15 * current / amount))
+                |> Maybe.map (\{ current } -> round (0.2 * current / amount))
                 |> Maybe.withDefault 0
     in
         if shouldCraft then
