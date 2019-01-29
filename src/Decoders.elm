@@ -51,10 +51,10 @@ gameDataDecoder =
                     Decode.field "meta" <|
                         Decode.list (Decode.maybe buildingDecoder)
         )
-        (Decode.field "craftTable" <|
-            Decode.field "resRows" <|
+        (Decode.field "workshop" <|
+            Decode.field "crafts" <|
                 Decode.list <|
-                    Decode.maybe (Decode.field "recipeRef" recipeDecoder)
+                    Decode.maybe recipeDecoder
         )
         (Decode.at [ "globalEffectsCached", "hutPriceRatio" ] Decode.float)
         (Decode.at [ "globalEffectsCached", "priceRatio" ] Decode.float)

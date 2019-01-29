@@ -78,13 +78,13 @@ function loadApp() {
   /* sendHunters */
   app.ports.sendHunters.subscribe(function() {
     console.log("Sending Your Hunters.");
-    $('#fastHuntContainer a').click();
+    document.querySelector('#fastHuntContainer a').click();
   });
 
   /* praiseSun */
   app.ports.praiseSun.subscribe(function() {
     console.log("Praising the Sun.");
-    $('#fastPraiseContainer a').click();
+    document.querySelector('#fastPraiseContainer a').click();
   });
 
 
