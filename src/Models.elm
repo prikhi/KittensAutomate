@@ -34,6 +34,9 @@ type alias Options =
     , craftPlate : Bool
     , craftSteel : Bool
     , craftKerosene : Bool
+    , craftParchment : Bool
+    , craftManuscript : Bool
+    , craftCompendium : Bool
     , craftThorium : Bool
     }
 
@@ -61,6 +64,9 @@ initialOptions =
     , craftPlate = False
     , craftSteel = False
     , craftKerosene = False
+    , craftParchment = False
+    , craftManuscript = False
+    , craftCompendium = False
     , craftThorium = False
     }
 
@@ -105,7 +111,12 @@ type ResourceType
     | Oil
     | Catpower
     | Science
+    | Culture
     | Faith
+    | Furs
+    | Parchment
+    | Manuscript
+    | Compendium
 
 
 type alias Price =
@@ -128,6 +139,9 @@ type RecipeType
     | CraftPlate
     | CraftSteel
     | CraftKerosene
+    | CraftParchment
+    | CraftManuscript
+    | CraftCompendium
     | CraftThorium
 
 

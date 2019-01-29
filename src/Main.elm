@@ -144,6 +144,15 @@ updateOptions msg options =
         Messages.CraftKerosene ->
             { options | craftKerosene = not options.craftKerosene }
 
+        Messages.CraftParchment ->
+            { options | craftParchment = not options.craftParchment }
+
+        Messages.CraftManuscript ->
+            { options | craftManuscript = not options.craftManuscript }
+
+        Messages.CraftCompendium ->
+            { options | craftCompendium = not options.craftCompendium }
+
         Messages.CraftThorium ->
             { options | craftThorium = not options.craftThorium }
 

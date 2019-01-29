@@ -149,8 +149,23 @@ resourceTypeDecoder =
                 "science" ->
                     succeed Science
 
+                "culture" ->
+                    succeed Culture
+
                 "faith" ->
                     succeed Faith
+
+                "furs" ->
+                    succeed Furs
+
+                "parchment" ->
+                    succeed Parchment
+
+                "manuscript" ->
+                    succeed Manuscript
+
+                "compedium" ->
+                    succeed Compendium
 
                 _ ->
                     Decode.fail ("Could not decode resource type: " ++ str)
@@ -203,6 +218,15 @@ recipeTypeDecoder =
 
                 "kerosene" ->
                     succeed CraftKerosene
+
+                "parchment" ->
+                    succeed CraftParchment
+
+                "manuscript" ->
+                    succeed CraftManuscript
+
+                "compedium" ->
+                    succeed CraftCompendium
 
                 "thorium" ->
                     succeed CraftThorium

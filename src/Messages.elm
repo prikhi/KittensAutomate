@@ -32,4 +32,7 @@ type OptionsMsg
     | CraftPlate
     | CraftSteel
     | CraftKerosene
+    | CraftParchment
+    | CraftManuscript
+    | CraftCompendium
     | CraftThorium

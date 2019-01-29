@@ -13,6 +13,9 @@ all =
     , CraftPlate
     , CraftSteel
     , CraftKerosene
+    , CraftParchment
+    , CraftManuscript
+    , CraftCompendium
     , CraftThorium
     ]
 
@@ -38,6 +41,15 @@ toString recipeType =
         CraftKerosene ->
             "Kerosene"
 
+        CraftParchment ->
+            "Parchment"
+
+        CraftManuscript ->
+            "Manuscript"
+
+        CraftCompendium ->
+            "Compendium"
+
         CraftThorium ->
             "Thorium"
 
@@ -62,6 +74,15 @@ optionSelector recipeType =
 
         CraftKerosene ->
             .craftKerosene
+
+        CraftParchment ->
+            .craftParchment
+
+        CraftManuscript ->
+            .craftManuscript
+
+        CraftCompendium ->
+            .craftCompendium
 
         CraftThorium ->
             .craftThorium
@@ -89,6 +110,15 @@ message recipeType =
             CraftKerosene ->
                 Messages.CraftKerosene
 
+            CraftParchment ->
+                Messages.CraftParchment
+
+            CraftManuscript ->
+                Messages.CraftManuscript
+
+            CraftCompendium ->
+                Messages.CraftCompendium
+
             CraftThorium ->
                 Messages.CraftThorium
 
@@ -114,6 +144,15 @@ clickCommand recipeType =
 
             CraftKerosene ->
                 "kerosene"
+
+            CraftParchment ->
+                "parchment"
+
+            CraftManuscript ->
+                "manuscript"
+
+            CraftCompendium ->
+                "compedium"
 
             CraftThorium ->
                 "thorium"
