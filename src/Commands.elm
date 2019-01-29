@@ -188,9 +188,27 @@ shouldBuildOrCraft typeSelector modelSelector priceFunc desiredType optionsSelec
         enabled && canAfford
 
 
+{-| Determine if we have enough resources for the given price. For capped
+    resources, this means having enough and being above 90% of the cap. For
+    uncapped resources, this means having at least 100x the price.
+-}
 enoughResources : List CurrentResource -> Price -> Bool
 enoughResources currentResources { resourceType, amount } =
-    List.filter (\r -> r.resourceType == resourceType) currentResources
-        |> List.head
-        |> Maybe.map (\r -> r.current > amount && r.current / r.max > 0.9)
-        |> Maybe.withDefault False
+    let
+        currentResource =
+            List.filter (\r -> r.resourceType == resourceType) currentResources
+                |> List.head
+
+        cappedResourceResult r =
+            r.current > amount && r.current / r.max > 0.9
+
+        uncappedResourceResult r =
+            r.current > 100 * amount
+
+        hasEnough r =
+            if r.max > 0 then
+                cappedResourceResult r
+            else
+                uncappedResourceResult r
+    in
+        currentResource |> Maybe.map hasEnough |> Maybe.withDefault False
